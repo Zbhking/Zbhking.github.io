@@ -1,0 +1,35 @@
+.navList {
+    position: fixed;
+    top: 35%;
+    right: 50px;
+    width: 50px;
+    height: 260px;
+    z-index: 99;
+}
+
+#list {
+    display: none;
+}
+
+.navList a {
+    float: left;
+    width: 50px;
+    height: 41px;
+    text-align: center;
+    line-height: 41px;
+    font-size: 16px;
+    text-decoration: none;
+    background-image: url(../img/lovei.jpg);
+    margin-bottom: 20px;
+}
+
+.love {
+    position: absolute;
+    z-index: 0;
+}
+
+.love .iconfont {
+    display: block;
+    font-size: 50px;
+    color: #ee0d33;
+}

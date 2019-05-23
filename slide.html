@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="stylesheet" href="./css/slide.css">
+    <link rel="stylesheet" href="./css/common.css">
+    <link rel="stylesheet" href="./css/iconfont.css">
+
+    <title>King</title>
+</head>
+
+<body>
+    <div class="all" id='box'>
+
+        <div class="screen" id="screen">
+            <ul>
+                <li><img src="img/01anniversary.jpg" width="600" height="800" /></li>
+                <li><img src="img/02anniversary.jpg" width="600" height="800" /></li>
+                <li><img src="img/03anniversary.jpg" width="600" height="800" /></li>
+                <li><img src="img/04anniversary.jpg" width="600" height="800" /></li>
+                <li><img src="img/05anniversary.jpg" width="600" height="800" /></li>
+                <li><img src="img/06anniversary.jpg" width="600" height="800" /></li>
+                <li><img src="img/07anniversary.jpg" width="600" height="800" /></li>
+                <li><img src="img/08anniversary.jpg" width="600" height="800" /></li>
+                <li><img src="img/01anniversary.jpg" width="600" height="800" /></li>
+            </ul>
+            <ol>
+                <li class="current">1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+                <li>6</li>
+                <li>7</li>
+                <li>8</li>
+            </ol>
+        </div>
+
+        <div id="arr">
+            <span id="left">&lt;</span>
+            <span id="right">&gt;</span>
+        </div>
+    </div>
+    <!-- 导航栏 -->
+    <div class="navList" id="nav">
+        <div id="list">
+            <a href="home.html">L</a>
+            <a href="index.html">O</a>
+            <a href="slide.html">V</a>
+            <a href="anniversary.html">E</a>
+        </div>
+    </div>
+    <!-- 丘比特的祝福 -->
+    <div class="love" id="loveBox">
+        <i class="iconfont" id="iqbt">&#xe6db;</i>
+    </div>
+    <!-- 背景音乐 -->
+    <audio controls="controls" hidden="hidden" autoplay="autoplay" loop="loop">
+        <source src="./music/Paula DeAnda - Why Would I Ever.mp3" type="audio/ogg" />
+        <source src="./music/Paula DeAnda - Why Would I Ever.mp3" type="audio/mpeg" />
+    </audio> -->
+    <script src="./js/common1.js"></script>
+    <script>
+        var box = document.getElementById('box');
+        //找到id为box标签
+        var ul = document.getElementById('screen').children[0];
+        //找到id为screen标签下面的ul
+        var liImg = ul.children;
+        //找到ul下面的子元素
+        var arr = document.getElementById('arr');
+        //找到id为arr的标签
+        var olLi = document.getElementById('screen').children[1].children;
+        //找到id为screen标签下标为1的子元素
+
+
+        box.onmouseover = function () {
+            //鼠标移入id为box标签事件
+            clearInterval(time);
+            //当我鼠标移入的时候就停止计时器
+            arr.style.display = 'block';
+            //当我鼠标移入的时候就改变id为arr标签的行内属性，display的值为显示
+        };
+        box.onmouseout = function () {
+            //鼠标移出id为box标签事件
+            time = setInterval(beautyPattern, 2500);
+            arr.style.display = 'none';
+            //当我鼠标移入的时候就改变id为arr标签的行内属性，display的值为隐藏
+        };
+
+        var index = 0;
+        var left = document.getElementById('screen').offsetWidth;
+        //右边箭头
+        document.getElementById('right').onclick = function () {
+            beautyPattern();
+            //把beautyPattern函数调用
+        };
+
+        var time = setInterval(beautyPattern, 2500);
+        //把函数加到计时器中，每隔一段时间换一张图，并获得计时器的编号
+
+
+
+        //把右箭头的代码封装
+        function beautyPattern() {
+            if (index == liImg.length - 1) {
+                //if变量index的值是否等于数组的长度-1
+                index = 0;
+                //满足条件的话就给index重新赋给为0
+                ul.style.left = 0;
+                //此时ul标签中的style属性的left就设置为0
+            }
+            index++;
+            //变量index自增
+            animate(ul, -index * left);
+            //调用原本封装号的动画函数
+            for (var i = 0; i < olLi.length; i++) {
+                //排它
+                olLi[i].className = '';
+            }
+            //当index等于5时，因为olLi数组中没有下标为5的值，这个时候就会出现报错
+            //因为第五张图片就是第一张，我们要给它一个判断
+            if (index == olLi.length) {
+                //if判断，当变量index等于olLi数组的长度时
+                olLi[0].className = 'current'
+                //就跳到序号1去，序号1的下标为0，这时我们就要为它添加一个类
+            } else {
+                olLi[index].className = 'current';
+                //条件不成立就按照变量index的值来给li标签添加类名
+            }
+        }
+        //左边箭头
+        document.getElementById('left').onclick = function () {
+            if (index == 0) {
+                //if判断变量index是否等于0
+                index = liImg.length - 1;
+                //条件满足就给变量index重新赋值，值为ul下li标签的长度-1
+                animate(ul, -index * left);
+                //调用动画函数，设置ul标签的移动值
+            }
+            index--;
+            //变量index自减
+            animate(ul, -index * left);
+            //调用动画函数
+
+            //根据变量index来改变olLi标签的类名，这时就需要用排它
+            for (var i = 0; i < olLi.length; i++) {
+                //先排它
+                olLi[i].className = '';
+                //清除所有li的类名
+            }
+            olLi[index].className = 'current';
+            //变量index为几，就给哪个li添加current类名
+        };
+
+
+        //序号点击事件
+        /*我点击哪个序号，就跳到哪张图，这里我可以先设置一个自定义属性，
+        首先要得到每个序号的索引，然后通过索引对应图片
+        */
+        for (var i = 0; i < olLi.length; i++) {
+            olLi[i].setAttribute('index', i);
+            //给所有ol标签里面的li添加一个属性，index
+            olLi[i].onclick = function () {
+                /*哪个序号被点击，就返回哪个序号的index索引值
+                用一个全局变量存储起来*/
+
+                if (index == liImg.length - 1) {
+                    //判断变量index 是否等于图片长度-1
+                    ul.style.left = 0;
+                    index = 0;
+                }
+                index = this.getAttribute('index');
+                // ul.style.left = -index * left + 'px';
+                animate(ul, -index * left);
+                /*如果加上匀速动画就要判断*/
+                // 此时ul标签的left就往哪边移动
+                for (var i = 0; i < olLi.length; i++) {
+                    //排它，首先要先清空所有li的样式
+                    olLi[i].className = '';
+                }
+                this.className = 'current';
+                //谁被点击就给谁加上current类名
+            }
+        }
+        // 导航栏
+        var nav = document.getElementById('nav');
+        nav.onmouseover = function () {
+            document.getElementById('list').style.display = 'block';
+        }
+        nav.onmouseout = function () {
+            document.getElementById('list').style.display = 'none';
+        }
+        // //丘比特
+        var loveBox = document.getElementById('loveBox');
+        //找到放字体图标的盒子
+        document.onmousemove = function (e) {
+            //设置鼠标移动事件，并传参
+            e = e || window.event;
+            //兼容IE8代码
+            var X = getEventPagePoint(e).pageX;
+            //用x变量来存储可视区域加元素原本的宽
+            var Y = getEventPagePoint(e).pageY;
+            //用y变量来存储可视区域个元素原本的top值
+            loveBox.style.left = X + 'px';
+            //然后赋值给img标签的left样式
+            loveBox.style.top = Y + 'px';
+            //赋值给top样式
+        }
+    </script>
+</body>
+
+</html>

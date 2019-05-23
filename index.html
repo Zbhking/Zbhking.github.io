@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+    <title>十里挑花</title>
+    <link rel="stylesheet" href="css/index.css" />
+    <link rel="stylesheet" href="css/iconfont.css">
+    <link rel="stylesheet" href="css/default.css">
+    <link rel="stylesheet" href="css/common.css">
+    <script src="js/common1.js"></script>
+    <script>
+        var config = [{
+                width: 0,
+                top: 0,
+                left: 0,
+                opacity: 0,
+                zIndex: 1
+            }, {
+                width: 200,
+                top: 5,
+                left: 50,
+                opacity: 0.2,
+                zIndex: 2
+            }, {
+                width: 400,
+                top: 20,
+                left: 100,
+                opacity: 0.4,
+                zIndex: 3
+            },
+            {
+                width: 600,
+                top: 70,
+                left: 0,
+                opacity: 0.7,
+                zIndex: 4
+            },
+            {
+                width: 800,
+                top: 100,
+                left: 200,
+                opacity: 1,
+                zIndex: 9
+            },
+            {
+                width: 600,
+                top: 70,
+                left: 600,
+                opacity: 0.7,
+                zIndex: 4
+            },
+
+            {
+                width: 400,
+                top: 20,
+                left: 700,
+                opacity: 0.4,
+                zIndex: 3
+            }, {
+                width: 200,
+                top: 5,
+                left: 950,
+                opacity: 0.2,
+                zIndex: 2
+            },
+            {
+                width: 0,
+                top: 0,
+                left: 0,
+                opacity: 0,
+                zIndex: 1
+            },
+
+
+        ];
+
+        window.onload = function () {
+            //页面加载完成就执行
+            var flag = true;
+            //可以用开关思想，来阻止点击事件过快的时候，图片旋转到一起的问题
+            var liList = document.getElementsByTagName('li');
+            //找到所有的li标签
+            var arrow = document.getElementById('arrow');
+            //找到id为arrow的标签
+            var wrap = document.getElementById('wrap');
+            //找到id为warp的标签
+            var loveX = document.getElementById('loveX');
+            //找到满天星标签
+            var ul = document.getElementById('ul');
+            //找到ul标签
+
+            function thomas() {
+                //封装成函数，可多次调用
+                for (var i = 0; i < liList.length; i++) {
+                    //遍历所有li标签
+                    mAnimate(liList[i], config[i], function () {
+                        flag = true;
+                    });
+                    //给每个li标签设置对应的属性,当代码执行完后才执行回调函数
+                }
+            }
+
+            thomas();
+            //调用函数
+            wrap.onmouseover = function () {
+                //鼠标移入事件
+                mAnimate(arrow, {
+                    'opacity': 1
+                })
+                //鼠标移入时给id为arrow的标签设置透明度，值为1
+            };
+            wrap.onmouseout = function () {
+                //鼠标移出事件
+                mAnimate(arrow, {
+                    'opacity': 0
+                })
+                //当鼠标移出时，给id为arrow标签透明度值设为0
+            };
+
+
+            /*思路：每次把第一个元素放到最后，然后重新给每个li赋值*/
+            document.getElementById('arrRight').onclick = function () {
+                //右箭头鼠标点击事件
+                if (flag == true) {
+                    //if判断，看这个变量flag是否为true
+                    flag = false;
+                    //先给变量flag重新赋值
+                    config.push(config.shift());
+                    //删除config对象中的第一个元素并返回，然后把第一个元素重新添加到对象的最后
+                    thomas();
+                    //在调用封装好的函数重新赋值
+                }
+            };
+
+            /*思路：每次把最后一个元素放在开头，然后重新给每个li赋值*/
+            document.getElementById('arrLeft').onclick = function () {
+                //左箭头鼠标点击事件
+                if (flag == true) {
+                    //if判断
+                    flag = false;
+                    config.unshift(config.pop());
+                    //删除config对象中的最后一个元素并返回，再在对象的开头添加这个元素
+                    thomas();
+                    //调用函数
+                }
+
+            };
+            // var bodyX = document.querySelector('body').offsetWidth;
+            // var bodyY = document.querySelector('body').offsetHeight;
+            // for (num = 1; num <= 999; num++) {
+            //     var x = parseInt(Math.random() * bodyX);
+            //     var y = parseInt(Math.random() * bodyY);
+            //     var li = document.createElement('li');
+            //     li.innerHTML = '&#xe506;';
+            //     li.className = 'iconfont Mtx';
+            //     li.style.left = x + 'px';
+            //     li.style.top = y + 'px';
+            //     ul.appendChild(li);
+            // }
+            var loveBox = document.getElementById('loveBox');
+            //找到放字体图标的盒子
+            document.onmousemove = function (e) {
+                //设置鼠标移动事件，并传参
+                e = e || window.event;
+                //兼容IE8代码
+                var X = getEventPagePoint(e).pageX;
+                //用x变量来存储可视区域加元素原本的宽
+                var Y = getEventPagePoint(e).pageY;
+                //用y变量来存储可视区域个元素原本的top值
+                loveBox.style.left = X + 'px';
+                //然后赋值给img标签的left样式
+                loveBox.style.top = Y + 'px';
+                //赋值给top样式
+            }
+            //导航栏
+            var nav = document.getElementById('nav');
+            nav.onmouseover = function () {
+                document.getElementById('list').style.display = 'block';
+            }
+            nav.onmouseout = function () {
+                document.getElementById('list').style.display = 'none';
+            }
+        }
+    </script>
+
+</head>
+
+<body>
+    <div class="wrap" id="wrap">
+        <div class="slide" id="slide">
+            <ul>
+                <li><a href="#"><img src="img/Anniversary01.jpg" alt="" /></a></li>
+                <li><a href="#"><img src="img/Anniversary02.jpg" alt="" /></a></li>
+                <li><a href="#"><img src="img/Anniversary05.jpg" alt="" /></a></li>
+                <li><a href="#"><img src="img/Anniversary04.jpg" alt="" /></a></li>
+                <li><a href="#"><img src="img/Anniversary03.jpg" alt="" /></a></li>
+                <li><a href="#"><img src="img/Anniversary06.jpg" alt="" /></a></li>
+                <li><a href="#"><img src="img/Anniversary07.jpg" alt="" /></a></li>
+                <li><a href="#"><img src="img/Anniversary08.jpg" alt="" /></a></li>
+                <li><a href="#"><img src="img/Anniversary09.jpg" alt="" /></a></li>
+            </ul>
+            <div class="arrow" id="arrow">
+                <a href="javascript:;" class="prev" id="arrLeft"></a>
+                <a href="javascript:;" class="next" id="arrRight"></a>
+            </div>
+        </div>
+        <audio controls="controls" hidden="hidden" autoplay="autoplay" loop="loop">
+            <source src="music/音浪 - Deepside Deejays-Never Be Alone 纯音版（音浪 remix）.mp3" type="audio/ogg" />
+            <source src="music/音浪 - Deepside Deejays-Never Be Alone 纯音版（音浪 remix）.mp3" type="audio/mpeg" />
+        </audio>
+
+    </div>
+    <div class="babysbreath" id="loveX">
+        <ul id="ul">
+        </ul>
+    </div>
+    <!-- 丘比特 -->
+    <div class="love" id="loveBox">
+        <i class="iconfont" id="iqbt">&#xe6db;</i>
+    </div>
+    <!-- 导航栏 -->
+    <div class="navList" id="nav">
+        <div id="list">
+            <a href="home.html">L</a>
+            <a href="index.html">O</a>
+            <a href="slide.html">V</a>
+            <a href="anniversary.html">E</a>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+    <title>我想对你说</title>
+    <link rel="stylesheet" href="./css/common.css">
+    <link rel="stylesheet" href="./css/iconfont.css">
+    <script src="./js/common1.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: url("img/bg.gif");
+            /* background-color: pink; */
+            font: 12px "simsun";
+        }
+
+        .content {
+            width: 960px;
+            height: 627px;
+            margin: 0 auto;
+            background: url("img/content_bg.jpg");
+            position: relative;
+            margin-top: 100px;
+        }
+
+        .clearfix {
+            *zoom: 1;
+        }
+
+        .clearfix:before,
+        .clearfix:after {
+            content: '';
+            display: table;
+        }
+
+        .clearfix:after {
+            clear: both;
+        }
+
+        .tip {
+            width: 227px;
+            position: absolute;
+            top: 100px;
+            left: 200px;
+            /* z-index: 2; */
+        }
+
+        .tip-h {
+            padding-top: 50px;
+            background: url("img/tip1_h.gif") no-repeat;
+            cursor: default;
+        }
+
+        .text {
+            float: left;
+            padding-left: 10px;
+        }
+
+        .close {
+            float: right;
+            margin-right: 10px;
+        }
+
+        .tip-m {
+            min-height: 40px;
+            padding: 0 10px;
+            padding-top: 10px;
+            background: url("./img/tip1_c.gif");
+        }
+
+        .tip-f {
+            height: 53px;
+            background: url("./img/tip1_f.gif");
+            padding-top: 20px;
+        }
+
+        .icon {
+            float: left;
+            padding-left: 10px;
+        }
+
+        .name {
+            float: right;
+            padding-right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <div class="content" id="content">
+    </div>
+    <!-- 导航栏 -->
+    <div class="navList" id="nav">
+        <div id="list">
+            <a href="home.html">L</a>
+            <a href="index.html">O</a>
+            <a href="slide.html">V</a>
+            <a href="anniversary.html">E</a>
+        </div>
+    </div>
+    <!-- 丘比特的祝福 -->
+    <!-- <div class="love" id="loveBox">
+        <i class="iconfont" id="iqbt">&#xe6db;</i>
+    </div> -->
+    <!-- 背景音乐 -->
+    <audio controls="controls" hidden="hidden" autoplay="autoplay" loop="loop">
+        <source src="./music/大柯 - 喜欢（Cover：阿肆）.mp3" type="audio/ogg" />
+        <source src="./music/大柯 - 喜欢（Cover：阿肆）.mp3" type="audio/mpeg" />
+    </audio> -->
+    <script>
+        var messages = [{
+                "id": 1,
+                "name": "郑彪辉",
+                "content": "滴滴答，开着我的小车车来了",
+                "time": "2019-04-26 13:14"
+            },
+            {
+                "id": 2,
+                "name": "郑彪辉",
+                "content": "真诚之中，与你相识相知，灵犀之间，与你朝夕相伴",
+                "time": "2019-04-26 17:20"
+            },
+            {
+                "id": 3,
+                "name": "郑彪辉",
+                "content": "执子之手的感动，也子偕老的温情，愿与你执子携手！",
+                "time": "2019-04-26 23:24"
+            },
+            {
+                "id": 4,
+                "name": "郑彪辉",
+                "content": "我爱你，没有什么目的。只是爱你。",
+                "time": "2019-04-27 00:00"
+            },
+            {
+                "id": 5,
+                "name": "郑彪辉",
+                "content": "我不仅要爱的肉眼认识我的肉身，我要你的灵眼认识我的灵魂。",
+                "time": "2019-04-27 08:59"
+            },
+            {
+                "id": 6,
+                "name": "郑彪辉",
+                "content": "你欢乐，所以我欢乐",
+                "time": "2019-04-27 10:30"
+            },
+            {
+                "id": 7,
+                "name": "郑彪辉",
+                "content": "三生三世十里桃花",
+                "time": "2019-04-27 13:14"
+            },
+            {
+                "id": 8,
+                "name": "郑彪辉",
+                "content": "这辈子最大的幸运就是认识你，我会紧紧抓住你，爱你！",
+                "time": "2019-04-27 18:18"
+            },
+            {
+                "id": 9,
+                "name": "郑彪辉",
+                "content": "一年一季，陪你度过春、夏、秋、冬；陪你看日出、日落，看来看去还是夕阳下的佳人最美",
+                "time": "2019-04-27 21:21:21"
+            }
+        ];
+        // var tip = document.getElementById('tip');
+        //找到id为tip的div标签
+        var content = document.getElementById('content');
+        //找到id为content的div标签
+        for (var i = 0; i < messages.length; i++) {
+            //循环遍历messages对象
+            var obj = messages[i];
+            //用一个变量将对象存储起来
+            var tip = document.createElement('div');
+            //创建一个div标签
+            tip.className = 'tip';
+            //标签的类名为tip
+            tip.innerHTML = '<div class="tip-h clearfix" title="双击关闭纸条">' +
+                '<div class="text">第[' + obj.id + ']条 ' + obj.time + '</div>' +
+                '<div class="close" title="关闭纸条">x</div>' +
+                '</div>' +
+                '<div class="tip-m">' + obj.content + '</div>' +
+                '<div class="tip-f clearfix">' +
+                '<div class="icon">' +
+                '<img src="img/bpic_1.gif" alt="" />' +
+                '</div>' +
+                '<div class="name">' + obj.name + '</div>' +
+                '</div>';
+            //给id为tip的标签设置文本内容
+
+            //给9个祝福条设置随机位置，高不能超过627-187=440px ，宽不能超过960-227=733px
+            var x = parseInt(Math.random() * 734);
+            //随机数区间1-733赋值给变量x，parseInt 取整
+            var y = parseInt(Math.random() * 441);
+            //随机数区间1-440赋值给变量y，  parseInt取整
+            tip.style.left = x + "px";
+            //给标签添加行内样式left
+            tip.style.top = y + "px";
+            content.appendChild(tip);
+            //给id为content的标签里面添加子元素tip
+            //appendChild 给元素添加子元素
+
+            //给标签设置双击关闭事件
+            tip.children[0].ondblclick = function () {
+                //给标签添加双击事件
+                content.removeChild(this.parentNode);
+                //通过父元素删掉被双击的标签
+                //removeChild 删除子元素    parentNode 获取父元素，只能是标签
+            }
+
+            //给标签设置谁被点击谁的层级高,其他的为0，可以用排它思想
+            var num = 0;
+            //声明变量num0
+            tip.onclick = function () {
+                //给标签点击事件
+                // var tipList = document.getElementsByClassName('tip');
+                // //找到类名为tip的所有标签
+                // for (var i = 0; i < tipList.length; i++) {
+                //     //遍历tip标签，排它思想，先把它们的层级都设置0
+                //     tipList[i].style.zIndex = 0;
+                //     //设置标签伪数组中的每一项层级都为0
+                // }
+                // this.style.zIndex = 1;
+                // //谁被点击谁的层级就为1
+                num++;
+                //先自增一次
+                this.style.zIndex = num;
+                //被点击的层次为num的值
+            }
+
+
+            //点击关闭标签，将它的父元素删掉，从而达到关闭的效果
+            tip.children[0].children[1].onclick = function () {
+                //找到tip标签下下标为0的元素，再从下标为0的元素中找到下标为1的元素，给它点击事件
+                content.removeChild(this.parentNode.parentNode);
+                //利用父元素删除子元素的规则，括号里面为找到被点击的两层父元素
+            }
+        }
+        // 导航栏
+        var nav = document.getElementById('nav');
+        nav.onmouseover = function () {
+            document.getElementById('list').style.display = 'block';
+        }
+        nav.onmouseout = function () {
+            document.getElementById('list').style.display = 'none';
+        }
+        //丘比特
+        // var loveBox = document.getElementById('loveBox');
+        // //找到放字体图标的盒子
+        // document.onmousemove = function (e) {
+        //     //设置鼠标移动事件，并传参
+        //     e = e || window.event;
+        //     //兼容IE8代码
+        //     var X = getEventPagePoint(e).pageX;
+        //     //用x变量来存储可视区域加元素原本的宽
+        //     var Y = getEventPagePoint(e).pageY;
+        //     //用y变量来存储可视区域个元素原本的top值
+        //     loveBox.style.left = X + 'px';
+        //     //然后赋值给img标签的left样式
+        //     loveBox.style.top = Y + 'px';
+        //     //赋值给top样式
+        // }
+    </script>
+</body>
+
+</html>
